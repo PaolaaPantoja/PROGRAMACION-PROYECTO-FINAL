@@ -2,7 +2,7 @@
 Este repositorio corresponde a la asignatura programación del trabajo final.
 
 
-TECNICATURA SUPERIORENTELECOMUNICACIONES
+TECNICATURA SUPERIOR EN TELECOMUNICACIONES
 
 PROGRAMACIÓN
 
