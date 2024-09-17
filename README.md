@@ -26,14 +26,16 @@ IMPLEMENTACIÓN DE SENSORES DE TEMPERATURA Y HUMEDAD EN AMBIENTES REDUCIDOS
 
 
 
-Alumnas
+Alumnas:
  
 BRIZUELA, Laura Analía//
 PANTOJA, Paola Natalia Alejandra 
  
 
-Profesor
+Profesor:
 LANFRANCO, Lisandro Noel
+
+
 Fecha de entrega
 16/9/2024
 
