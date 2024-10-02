@@ -1,12 +1,8 @@
 """Programa para gestionar la BD e iniciar objetos
-de la clase hcodigo"""
+de la clase codigo"""
 
-
-
+from database import Database
 from codigo import Sensor
-
-
-
 
 def main():
 
@@ -14,17 +10,12 @@ def main():
         """metodo inicio programa
         Args: eleccion(int): Menú 
         """
-    #db=_Database("localhost", 3306,"root","root","huerta")  
-    sensor1=Sensor()
+    db=Database("localhost", 3306,"root","root","sensor")  
+    sensor1=Sensor(db)
+    print("BIENVENIDO")
+    sensor1.opcionesMenuPrincipal()
     
-    sensor1.clasificacionEleccion(sensor1.opcionesMenuPrincipal())
-    
-    
- 
-    
-
 
 if __name__=="__main__":
     main()
 
-    

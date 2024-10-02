@@ -45,6 +45,9 @@ class Database:
         self.conexion.close()
         print("Se cerró la conexión con la Base de Datos")
 
-#db=Database("localhost", 3306,"root","root","huerta") 
+    def ultimoRegistro(self):
+        self.cursor.lastrowid
+        
+
+#db=Database("localhost", 3306,"root","root","sensor") 
 #print(db)
-#
