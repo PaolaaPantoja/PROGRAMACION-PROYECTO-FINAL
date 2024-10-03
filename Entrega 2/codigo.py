@@ -1,5 +1,8 @@
 import datetime
-#from database import Database
+
+
+import matplotlib.pyplot as plt
+
 
 
 
@@ -26,12 +29,15 @@ class Sensor():
 
             if eleccion==1:
                 self.registrosHumedad()
-            if eleccion==2:
+            elif eleccion==2:
                 self.bateriaEstado()            
-            if eleccion==3:
-                print("trae registros de humedad de la BD")
-            if eleccion==4:
-                print("trae estado de la bateria de la BD")
+            elif eleccion==3:
+                self.visualizacionGrafica()
+            elif eleccion==4:
+                self.db.cerrarConexion()
+                break
+            else:
+                print("inngresó un dato incorrecto")
 
 
     def registrosHumedad(self):
@@ -75,32 +81,64 @@ class Sensor():
     def bateriaEstado(self):
         """metodo para buscar el estado de la bateria"""
         self.cargaBateria()
+    
+        ultimoid=("SELECT LAST_INSERT_ID();")
+        valorA=self.db.obtenerResultados(ultimoid)
+        resultado=valorA[-1]
+        resultado2=resultado[0]
         
-        opcion1=("SELECT cargador FROM bateria WHERE idbateria=(select max(idbateria) FROM bateria)")
-        opcion2=("SELECT carga FROM bateria WHERE idbateria=(select max(idbateria) FROM bateria)")
+        
+
+             
+        opcion1=("SELECT cargador FROM bateria WHERE idbateria="+str(resultado2))
+        opcion2=("SELECT carga FROM bateria WHERE idbateria="+str(resultado2))
         cargador=self.db.obtenerResultados(opcion1)
         carga=self.db.obtenerResultados(opcion2)
-        print(cargador)
+       
+        prueba=carga[-1]
+        prueba2=prueba[0]
+        
+        
+       
+        prueba3=cargador[-1]
+        prueba4=prueba3[0]
 
 
-        if cargador ==[(0,)]:
+        if prueba4 ==0:
             print("La batería no esta recibiendo carga")
-            if carga<=15:
+            if prueba2<=15.0:
                 print("La carga de la batería esta por debajo o igual a 15%")
             else:
-                print("Carga de la bateria: ", carga ,"%")
+                print("Carga de la bateria: ", prueba2 ,"%")
                      
-        elif cargador==1:
+        elif prueba4==1:
             print("La batería esta recibiendo carga")
-            if carga >=95:
+            if prueba2 >=95.0:
                 print("La bateria esta por encima o igual a 95%")
             else:
-                print("Carga de la bateria: " , carga ,"%")
+                print("Carga de la bateria: " , prueba2 ,"%")
 
         else:
             print("La batería no está funcionando correctamente")
             
         self.opcionesMenuPrincipal()
+
+
+    def visualizacionGrafica(self):
+
+        sql=("SELECT valores FROM humedad")
+        humedad =self.db.obtenerResultados(sql)
+        print(humedad)
+
+        plt.ion()
+        fig, ax=plt.subplot
+        ax.clear()
+        ax.plot()
+
+
+
+
+
 
                 
   
