@@ -1,12 +1,6 @@
 import datetime
 
 
-import matplotlib.pyplot as plt
-
-
-
-
-
 
 class Sensor():
 
@@ -37,7 +31,7 @@ class Sensor():
                 self.db.cerrarConexion()
                 break
             else:
-                print("inngresó un dato incorrecto")
+                print("ingresó un dato incorrecto")
 
 
     def registrosHumedad(self):
@@ -57,7 +51,7 @@ class Sensor():
                 self.db.ejecutarConsultas(sql,datos)
             if humedad == 7:
                 break
-        self.opcionesMenuPrincipal()
+        
 
 
 
@@ -121,19 +115,20 @@ class Sensor():
         else:
             print("La batería no está funcionando correctamente")
             
-        self.opcionesMenuPrincipal()
-
+        
 
     def visualizacionGrafica(self):
+        print("Registros de los valores de humedad")
+        sql=("SELECT fecha, valores FROM humedad")
+        valores=self.db.obtenerResultados(sql)   
+        print("--------------------------------------------------------------")  
+        print("                   Año  Mes   Día   Minutos        Humedad%")
+        print("--------------------------------------------------------------")                
+        for i in valores:
+            print(i)
 
-        sql=("SELECT valores FROM humedad")
-        humedad =self.db.obtenerResultados(sql)
-        print(humedad)
 
-        plt.ion()
-        fig, ax=plt.subplot
-        ax.clear()
-        ax.plot()
+
 
 
 

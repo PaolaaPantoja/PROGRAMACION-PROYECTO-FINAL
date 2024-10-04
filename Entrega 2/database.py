@@ -44,7 +44,7 @@ class Database:
         self.cursor.close()
         self.conexion.close()
         print("Se cerró la conexión con la Base de Datos")
-
+        
     def ultimoRegistro(self):
         self.cursor.lastrowid
         
