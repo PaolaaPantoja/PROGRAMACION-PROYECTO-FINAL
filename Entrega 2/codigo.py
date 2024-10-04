@@ -1,6 +1,6 @@
 import datetime
 
-
+import matplotlib.pyplot as plt
 
 class Sensor():
 
@@ -119,14 +119,26 @@ class Sensor():
 
     def visualizacionGrafica(self):
         print("Registros de los valores de humedad")
-        sql=("SELECT fecha, valores FROM humedad")
-        valores=self.db.obtenerResultados(sql)   
-        print("--------------------------------------------------------------")  
-        print("                   Año  Mes   Día   Minutos        Humedad%")
-        print("--------------------------------------------------------------")                
-        for i in valores:
-            print(i)
+        sql=("SELECT valores FROM humedad")
+        valores=self.db.obtenerResultados(sql)  
+        aplanada=[elemento for tupla in valores for elemento in tupla]
+        print(aplanada)
 
+        sql = ("SELECT idhumedad FROM humedad")
+        valoresA = self.db.obtenerResultados(sql)
+        print(valoresA)
+        aplanadaA = [elemento for tupla in valoresA for elemento in tupla]
+
+        plt.figure()
+        plt.bar(aplanada,aplanadaA, color='orange')
+        plt.grid(True)
+        plt.show()
+
+        self.opcionesMenuPrincipal()
+        
+    
+
+        
 
 
 
