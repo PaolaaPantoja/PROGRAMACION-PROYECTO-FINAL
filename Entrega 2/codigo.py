@@ -1,6 +1,13 @@
 import datetime
+import time
 
-import matplotlib.pyplot as plt
+
+
+
+#import matplotlib.pyplot as plt
+
+
+           
 
 class Sensor():
 
@@ -8,9 +15,7 @@ class Sensor():
         self.humedad=0
         self.bateria=0
         self.db=db
-       
-  
-       
+             
     def opcionesMenuPrincipal(self):
         """funcion que despliega el menu para el usuario"""
 
@@ -34,23 +39,58 @@ class Sensor():
                 print("ingresó un dato incorrecto")
 
 
+  
+    
     def registrosHumedad(self):
         """funcion que carga valores de humedad del sensor a la BD"""
 
-        print("ingrese los valores de humedad o presione 7 para volver al menú anterior")
-
-        while True:
-            humedad=float(input(""))
+        print("ingrese los valores de humedad o escriba cerrar para volver al menú anterior")
+            
+  
         
-            if humedad !=7:
-                print("cargado ", humedad)
+     
+        
+        while True:
+
+            def recibir_datos():
+
+                datos = input("Ingrese informacion\n")
+                
+                return datos.split(',')
+
+            
+            datos=recibir_datos()
+
+            
+            if datos:
+                
+                humedad, bateria, cargador = map(float, datos)
+                
+                if (humedad or bateria or cargador) ==0:
+                    break
+                
+                if cargador==1:
+                    mensaje="SI"
+                else:
+                    mensaje="NO"
+                print(f'humedad: {humedad}, bateria: {bateria}, cargando: {mensaje}')
+                time.sleep(3) # Espera 1 segundo antes de la próxima lectura
+
+            
+                #print("cargado ", humedad)
                 hora=datetime.datetime.now()
-                print(hora)
+                #print(hora)
                 sql=("INSERT INTO humedad(fecha, valores) VALUES (%s,%s)")
-                datos=(hora, humedad)
-                self.db.ejecutarConsultas(sql,datos)
-            if humedad == 7:
-                break
+                contenido=(hora, humedad)
+                self.db.ejecutarConsultas(sql,contenido)
+                sql1=("INSERT INTO bateria(cargador, carga)VALUES(%s,%s)")
+                datosA=(cargador, bateria)
+                self.db.ejecutarConsultas(sql1,datosA)
+
+
+
+
+                
         
 
 
@@ -124,21 +164,50 @@ class Sensor():
         aplanada=[elemento for tupla in valores for elemento in tupla]
         print(aplanada)
 
-        sql = ("SELECT idhumedad FROM humedad")
+        sql = ("SELECT fecha FROM humedad")
         valoresA = self.db.obtenerResultados(sql)
         print(valoresA)
         aplanadaA = [elemento for tupla in valoresA for elemento in tupla]
+        print("que es esto", aplanadaA)
+        
+        
+        for i in aplanadaA:
+            time_delta = datetime.timedelta(valoresA)
 
-        plt.figure()
-        plt.bar(aplanada,aplanadaA, color='orange')
-        plt.grid(True)
-        plt.show()
+# Extraer el total de segundos
+            total_seconds = int(time_delta.total_seconds())
+
+# Calcular horas, minutos y segundos
+            hours = total_seconds // 3600  # Obtener las horas
+            minutes = (total_seconds % 3600) // 60  # Obtener los minutos
+            seconds = total_seconds % 60  # Obtener los segundos
+
+# Formatear el resultado como HH:MM:SS
+            formatted_time = f"{hours:02}:{minutes:02}:{seconds:02}"
+
+            print(formatted_time)  # Output: 18:07:32
+        
+
+
+
+
+
+
+
+
+
+
+
+        #plt.figure()
+        #plt.bar(aplanada,aplanadaA, color='orange')
+        #plt.grid(True)
+        #plt.show()
 
         self.opcionesMenuPrincipal()
         
     
 
-        
+
 
 
 
