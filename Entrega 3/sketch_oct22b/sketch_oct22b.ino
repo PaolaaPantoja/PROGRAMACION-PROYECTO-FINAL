@@ -1,5 +1,4 @@
-//#include <DHT11.h>
-
+//CODIGO FINAL
 #include <DHT.h>
 #include <DHT_U.h>
 
@@ -58,12 +57,6 @@ void loop() {
   // Leer humedad
   float humedad = dht.readHumidity();
   delay(10);
-  //float temperatura = dht.readTemperature();
- // delay(10);
-
-
-  //Serial.println(String(humedad));
-  //Serial.print(String(temperatura));
 
 
   // Leer nivel de batería
@@ -75,7 +68,7 @@ void loop() {
  
  
  Potenciometro = analogRead(A1);
-  position = map(Potenciometro, 0, 1023, 0, 100);  // convertir a porcentaje
+ position = map(Potenciometro, 0, 1023, 0, 100);  // convertir a porcentaje
  
 
   // Dependiendo del valor del potenciometro mostramos un LED u otro
